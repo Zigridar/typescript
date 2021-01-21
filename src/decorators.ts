@@ -70,3 +70,33 @@ class Component_2 {
 }
 
 const testComponent = new Component_2('name')
+
+/////////////
+
+type ValidatorType = 'required' | 'email'
+
+interface ValidatorConfig {
+    [prop: string] : {
+        [validateProp: string]: ValidatorType
+    }
+}
+
+const validators: ValidatorConfig = {}
+
+function Required(target: any, propName: string | symbol) {
+    validators[target.constructor.name] = {
+        ...validators[target.constructor.name],
+        [propName]: 'required'
+    }
+}
+
+class Form {
+
+    @Required
+    public email: string | void
+
+    constructor(email?: string) {
+        this.email = email
+    }
+
+}
